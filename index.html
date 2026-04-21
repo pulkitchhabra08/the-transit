@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Country I Was Passing Through — P</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,300;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;1,400;1,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #1A1612;
+  --bg2:      #221E18;
+  --bg3:      #2A2520;
+  --rose:     #C4878F;
+  --rose-dim: #D4969E;
+  --rose-pale:#7A4A52;
+  --amber:    #C49A6C;
+  --amber-dim:#D4AA7C;
+  --amber-pale:#6A5030;
+  --text:     #EDE0CC;
+  --text2:    #C8B89A;
+  --text3:    #8A7A68;
+  --text4:    #5A5040;
+  --border:   rgba(237,224,204,0.08);
+  --border2:  rgba(237,224,204,0.05);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'EB Garamond',serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* grain texture */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:9000;
+}
+
+/* CURSOR */
+.cursor{
+  width:6px;height:6px;
+  background:var(--rose-dim);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9999;
+  transition:transform 0.1s;
+}
+.cursor-ring{
+  width:28px;height:28px;
+  border:1px solid rgba(196,135,143,0.35);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9998;
+}
+
+/* PROGRESS */
+.progress{
+  position:fixed;top:0;left:0;
+  height:1.5px;
+  background:linear-gradient(90deg,var(--rose-pale),var(--rose),var(--amber));
+  z-index:8000;width:0%;
+  transition:width 0.08s;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:7000;
+  padding:1.4rem 3rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(to bottom,rgba(26,22,18,0.97),transparent);
+}
+.nav-logo{
+  font-family:'DM Mono',monospace;
+  font-size:9.5px;
+  letter-spacing:0.22em;
+  color:var(--text3);
+  text-transform:uppercase;
+}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{
+  font-family:'DM Mono',monospace;
+  font-size:8.5px;
+  letter-spacing:0.18em;
+  color:var(--text4);
+  text-decoration:none;
+  text-transform:uppercase;
+  transition:color 0.25s;
+}
+.nav-links a:hover{color:var(--rose-dim)}
+
+/* ===================== HERO ===================== */
+.hero{
+  height:100vh;
+  min-height:680px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  background:var(--bg);
+}
+
+/* soft warm wash behind everything */
+.hero-wash{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 30%, rgba(196,135,143,0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 50% at 15% 80%, rgba(196,154,108,0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 85% 70%, rgba(196,135,143,0.07) 0%, transparent 50%);
+  pointer-events:none;
+}
+
+/* faint ruled lines — like old paper */
+.hero-ruled{
+  position:absolute;inset:0;
+  pointer-events:none;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 47px,
+      rgba(237,224,204,0.03) 47px,
+      rgba(237,224,204,0.03) 48px
+    );
+}
+
+/* ghost letter watermark */
+.hero-ghost{
+  position:absolute;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(16rem,32vw,28rem);
+  font-weight:400;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(196,135,143,0.07);
+  user-select:none;
+  pointer-events:none;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;
+  z-index:1;
+  letter-spacing:-0.04em;
+  animation:ghostBreathe 9s ease-in-out infinite;
+}
+@keyframes ghostBreathe{
+  0%,100%{opacity:0.7}
+  50%{opacity:1}
+}
+
+/* corner ornaments */
+.corner{
+  position:absolute;
+  width:50px;height:50px;
+  pointer-events:none;
+  z-index:3;
+}
+.corner-tl{top:5rem;left:3rem;border-top:1px solid rgba(196,135,143,0.18);border-left:1px solid rgba(196,135,143,0.18)}
+.corner-tr{top:5rem;right:3rem;border-top:1px solid rgba(196,135,143,0.18);border-right:1px solid rgba(196,135,143,0.18)}
+.corner-bl{bottom:5rem;left:3rem;border-bottom:1px solid rgba(196,135,143,0.18);border-left:1px solid rgba(196,135,143,0.18)}
+.corner-br{bottom:5rem;right:3rem;border-bottom:1px solid rgba(196,135,143,0.18);border-right:1px solid rgba(196,135,143,0.18)}
+
+/* page number feel — top right */
+.hero-pg{
+  position:absolute;
+  top:5.5rem;right:3.5rem;
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.2em;
+  color:var(--text4);
+  z-index:4;
+  animation:softFade 1s ease 2.2s both;
+}
+
+/* floating side verses */
+.hero-side{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:4;
+  max-width:160px;
+}
+.hero-side-l{left:3.5rem;text-align:left;animation:slideInL 1.2s cubic-bezier(0.22,1,0.36,1) 1.6s both}
+.hero-side-r{right:3.5rem;text-align:right;animation:slideInR 1.2s cubic-bezier(0.22,1,0.36,1) 1.8s both}
+.hero-side-verse{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:0.82rem;
+  line-height:1.9;
+  color:var(--text3);
+  font-weight:400;
+}
+.hero-side-attr{
+  font-family:'DM Mono',monospace;
+  font-size:7.5px;
+  letter-spacing:0.14em;
+  color:var(--rose-pale);
+  margin-top:0.7rem;
+  display:block;
+  text-transform:uppercase;
+}
+
+/* central content */
+.hero-content{
+  position:relative;
+  z-index:5;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:8.5px;
+  letter-spacing:0.35em;
+  color:var(--text4);
+  text-transform:uppercase;
+  margin-bottom:2.5rem;
+  animation:softDown 1s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+  display:flex;align-items:center;gap:1.2rem;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{
+  content:'';width:32px;height:1px;
+  background:rgba(196,135,143,0.3);
+}
+
+/* the main title */
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(4.5rem,11vw,10rem);
+  line-height:0.9;
+  letter-spacing:-0.01em;
+  animation:softUp 1.4s cubic-bezier(0.22,1,0.36,1) 0.4s both;
+}
+.hero-title .t1{
+  display:block;
+  color:var(--text);
+  font-weight:400;
+}
+.hero-title .t2{
+  display:block;
+  color:var(--rose-dim);
+  font-weight:300;
+  font-size:0.38em;
+  letter-spacing:0.14em;
+  margin-top:0.14em;
+}
+
+/* thin rule with a diamond */
+.hero-rule-wrap{
+  display:flex;align-items:center;gap:1rem;
+  margin:2.2rem 0;
+  animation:softFade 1s ease 0.9s both;
+}
+.hero-rule{width:60px;height:1px;background:rgba(196,135,143,0.28)}
+.hero-diamond{
+  width:5px;height:5px;
+  background:var(--rose-pale);
+  transform:rotate(45deg);
+}
+
+/* the hook — poetic subtitle */
+.hero-hook{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.45rem);
+  font-weight:400;
+  color:var(--text2);
+  line-height:1.75;
+  max-width:480px;
+  animation:softUp 1.2s cubic-bezier(0.22,1,0.36,1) 0.85s both;
+}
+.hero-hook em{font-style:normal;color:var(--rose-dim)}
+.hero-hook .small{
+  display:block;
+  margin-top:0.6rem;
+  font-size:0.82em;
+  color:var(--text3);
+  letter-spacing:0.03em;
+}
+
+/* author byline */
+.hero-byline{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.22em;
+  color:var(--text4);
+  text-transform:uppercase;
+  margin-top:2.5rem;
+  animation:softFade 1s ease 1.3s both;
+}
+
+/* scroll */
+.scroll-hint{
+  position:absolute;bottom:2.8rem;left:50%;
+  transform:translateX(-50%);
+  font-family:'DM Mono',monospace;
+  font-size:7.5px;
+  letter-spacing:0.28em;
+  color:var(--text4);
+  text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:0.9rem;
+  animation:softFade 1s ease 2s both;
+  z-index:5;
+}
+.scroll-line{
+  width:1px;height:44px;
+  background:linear-gradient(to bottom,var(--rose-dim),transparent);
+  animation:scrollBreath 2.8s ease-in-out infinite;
+}
+@keyframes scrollBreath{
+  0%,100%{opacity:0.2;transform:translateY(-4px) scaleY(0.9)}
+  50%{opacity:0.8;transform:translateY(4px) scaleY(1.05)}
+}
+
+/* entrance keyframes */
+@keyframes softUp{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes softDown{
+  from{opacity:0;transform:translateY(-12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes softFade{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes slideInL{
+  from{opacity:0;transform:translateY(-50%) translateX(-14px)}
+  to{opacity:1;transform:translateY(-50%) translateX(0)}
+}
+@keyframes slideInR{
+  from{opacity:0;transform:translateY(-50%) translateX(14px)}
+  to{opacity:1;transform:translateY(-50%) translateX(0)}
+}
+
+/* ===================== DIVIDER ===================== */
+.soft-rule{
+  border:none;height:1px;
+  background:linear-gradient(to right,transparent,rgba(196,135,143,0.25),transparent);
+  margin:0;
+}
+
+/* ===================== PREFACE ===================== */
+.preface-section{
+  padding:8rem 0;
+  background:var(--bg);
+  position:relative;
+}
+.preface-inner{max-width:620px;margin:0 auto;padding:0 2rem}
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:8.5px;
+  letter-spacing:0.25em;
+  color:var(--rose);
+  text-transform:uppercase;
+  margin-bottom:2.5rem;
+  display:flex;align-items:center;gap:1.2rem;
+}
+.section-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(to right,rgba(196,135,143,0.3),transparent);
+}
+.preface-body{
+  font-size:1.15rem;
+  line-height:2.05;
+  color:var(--text2);
+  font-weight:400;
+}
+.preface-body p{margin-bottom:1.4rem}
+.preface-body em{color:var(--rose-dim);font-style:italic}
+.preface-sign{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  color:var(--text4);
+  letter-spacing:0.15em;
+  margin-top:2rem;
+}
+
+/* ===================== ARC ===================== */
+.arc-section{
+  padding:5rem 0;
+  background:var(--bg2);
+  position:relative;
+}
+.arc-inner{max-width:860px;margin:0 auto;padding:0 2rem}
+.arc-heading{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(2rem,5vw,4rem);
+  font-weight:400;
+  color:var(--text);
+  margin-bottom:3rem;
+  letter-spacing:-0.01em;
+}
+.arc-heading span{color:var(--rose-dim)}
+.arc-steps{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  border:1px solid var(--border);
+  background:var(--bg);
+}
+.arc-step{
+  padding:1.4rem 0.8rem;
+  border-right:1px solid var(--border2);
+  cursor:pointer;
+  transition:background 0.25s;
+  text-align:center;
+}
+.arc-step:last-child{border-right:none}
+.arc-step:hover{background:rgba(196,135,143,0.06)}
+.arc-num{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:1.6rem;
+  color:var(--rose-pale);
+  line-height:1;margin-bottom:0.5rem;
+  transition:color 0.25s;
+}
+.arc-word{
+  font-family:'DM Mono',monospace;
+  font-size:7.5px;
+  letter-spacing:0.13em;
+  color:var(--text4);
+  text-transform:uppercase;
+  display:block;
+  transition:color 0.25s;
+}
+.arc-step:hover .arc-num{color:var(--rose-dim)}
+.arc-step:hover .arc-word{color:var(--text3)}
+
+/* ===================== POEM SECTIONS ===================== */
+.poem-section{
+  padding:8rem 0;
+  position:relative;
+  overflow:hidden;
+}
+.poem-section:nth-child(odd){background:var(--bg)}
+.poem-section:nth-child(even){background:var(--bg2)}
+
+.poem-bg-num{
+  position:absolute;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(14rem,28vw,24rem);
+  color:transparent;
+  -webkit-text-stroke:1px rgba(196,135,143,0.05);
+  line-height:1;
+  pointer-events:none;user-select:none;z-index:0;
+  top:50%;transform:translateY(-50%);
+}
+.poem-bg-num.right{right:-3rem}
+.poem-bg-num.left{left:-3rem}
+
+.poem-inner{
+  max-width:740px;margin:0 auto;
+  padding:0 3rem;
+  position:relative;z-index:2;
+}
+
+.poem-meta{margin-bottom:2rem}
+.poem-number{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.22em;
+  color:var(--text4);
+  text-transform:uppercase;
+  margin-bottom:0.5rem;
+}
+.poem-title{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.1;
+  color:var(--text);
+  letter-spacing:-0.01em;
+  margin-bottom:0.3rem;
+}
+.poem-subtitle{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:1rem;
+  color:var(--text3);
+}
+
+.phil-block{
+  margin:2rem 0;
+  padding:1.4rem 1.6rem;
+  border-left:2px solid var(--rose-pale);
+  background:rgba(196,135,143,0.06);
+}
+.phil-block p{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:1rem;
+  line-height:1.9;
+  color:var(--text3);
+}
+.phil-attr{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.15em;
+  color:var(--text4);
+  margin-top:0.7rem;
+  text-transform:uppercase;
+}
+
+.poem-text{
+  font-family:'EB Garamond',serif;
+  font-size:1.12rem;
+  line-height:2.15;
+  white-space:pre-wrap;
+  color:var(--text);
+  font-weight:400;
+  margin:2rem 0;
+  padding:2rem 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+
+.poem-btns{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.5rem}
+.pbtn{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  background:none;
+  border:1px solid var(--border);
+  color:var(--text4);
+  padding:7px 14px;
+  cursor:none;
+  transition:all 0.25s;
+}
+.pbtn:hover{border-color:var(--rose-pale);color:var(--rose-dim);background:rgba(196,135,143,0.09)}
+
+.expanel{
+  display:none;
+  margin-top:1.2rem;
+  padding:1.4rem 1.6rem;
+  background:rgba(196,154,108,0.07);
+  border:1px solid rgba(196,154,108,0.18);
+}
+.expanel .ep-label{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  margin-bottom:0.8rem;
+  color:var(--amber-dim);
+}
+.expanel p{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:1rem;
+  line-height:1.9;
+  color:var(--text2);
+}
+
+/* poem divider */
+.poem-divider{
+  height:1px;
+  background:linear-gradient(to right,transparent,rgba(196,135,143,0.18),transparent);
+  position:relative;
+}
+.poem-divider::after{
+  content:attr(data-label);
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  font-family:'DM Mono',monospace;
+  font-size:7.5px;
+  letter-spacing:0.2em;
+  color:var(--text4);
+  background:var(--bg2);
+  padding:0 1rem;
+  text-transform:uppercase;
+}
+
+/* ===================== FINALE ===================== */
+.finale{
+  min-height:75vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:8rem 2rem;
+  background:var(--bg2);
+  position:relative;overflow:hidden;
+}
+.finale-ghost{
+  position:absolute;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(12rem,25vw,22rem);
+  color:transparent;
+  -webkit-text-stroke:1px rgba(196,135,143,0.07);
+  user-select:none;pointer-events:none;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;
+}
+.finale-lines{position:relative;z-index:2;max-width:560px}
+.finale-line{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1.1rem,2.5vw,1.7rem);
+  color:var(--text2);
+  line-height:1.9;
+  font-weight:400;
+}
+.finale-line.hl{
+  color:var(--rose-dim);
+  font-size:clamp(1.4rem,3.2vw,2.2rem);
+  margin-top:1rem;
+}
+.finale-credit{
+  margin-top:3.5rem;
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.2em;
+  color:var(--text4);
+  text-transform:uppercase;
+  position:relative;z-index:2;
+}
+
+/* ===================== REVEAL ===================== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.9s ease,transform 0.9s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:0.1s}.rd2{transition-delay:0.25s}.rd3{transition-delay:0.42s}
+
+/* mobile */
+@media(max-width:700px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .poem-inner{padding:0 1.5rem}
+  .arc-steps{grid-template-columns:repeat(4,1fr)}
+  .arc-step:nth-child(n+5){border-top:1px solid var(--border2)}
+  .hero-side{display:none}
+  .corner{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div class="progress" id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">a country &nbsp;·&nbsp; P</div>
+  <ul class="nav-links">
+    <li><a href="#preface">Preface</a></li>
+    <li><a href="#arc">Movements</a></li>
+    <li><a href="#poem-1">Poems</a></li>
+    <li><a href="#finale">Coda</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-wash"></div>
+  <div class="hero-ruled"></div>
+  <div class="hero-ghost" aria-hidden="true">AC</div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+  <div class="hero-pg">i — vii</div>
+
+  <div class="hero-side hero-side-l">
+    <div class="hero-side-verse">not perfect,<br>not whole,<br>not fully free —<br>but enough<br>to finally just… be.</div>
+    <span class="hero-side-attr">i · the speed of things</span>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">a collection of poems</div>
+    <div class="hero-title">
+      <span class="t1">A Country</span>
+      <span class="t2">I Was Passing Through</span>
+    </div>
+    <div class="hero-rule-wrap">
+      <div class="hero-rule"></div>
+      <div class="hero-diamond"></div>
+      <div class="hero-rule"></div>
+    </div>
+    <div class="hero-hook">
+      you don't live in a year like this —<br>
+      you move through it, leaving marks<br>
+      <span class="small">— these are the marks.</span>
+    </div>
+    <div class="hero-byline">P &nbsp;·&nbsp; seven poems &nbsp;·&nbsp; one country &nbsp;·&nbsp; no map</div>
+  </div>
+
+  <div class="hero-side hero-side-r">
+    <div class="hero-side-verse">look at the moon —<br>it's scarred, not immune,<br>yet it shines every night<br>like it owns the tune.</div>
+    <span class="hero-side-attr">vii · the moon doesn't apologize</span>
+  </div>
+
+  <div class="scroll-hint">
+    <span>enter</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<hr class="soft-rule">
+
+<!-- PREFACE -->
+<section class="preface-section" id="preface">
+  <div class="preface-inner">
+    <div class="section-label reveal">Preface</div>
+    <div class="preface-body reveal rd1">
+      <p>Every person moves through at least one year that doesn't feel like living — it feels like transit. You are between things. Between who you were certain you were and whoever is quietly assembling itself in the gap.</p>
+      <p>This is a document from inside that transit.</p>
+      <p>I didn't write these poems to arrive somewhere. I wrote them because moving through a country you don't have a map for requires you to keep notes — on the light at a particular hour, the weight of an ambition that costs more than you budgeted, a bird you watched from a window when you should have been elsewhere, a stranger whose face was briefly a door.</p>
+      <p>What you'll find here is not resolution. <em>Resolution is for people who have stopped moving.</em> What you'll find is the shape of the road — the texture of specific midnights, the particular silence at the top of something you spent years climbing, the way love arrives without an appointment and leaves the question open.</p>
+      <p>Seven poems. Seven territories. The same traveller in all of them, changed by each one in ways that only become visible from a distance.</p>
+      <p>You may recognise the country. Most people do — <em>they've just forgotten they passed through it.</em></p>
+      <div class="preface-sign">— P</div>
+    </div>
+  </div>
+</section>
+
+<hr class="soft-rule">
+
+<!-- ARC -->
+<section class="arc-section" id="arc">
+  <div class="arc-inner">
+    <div class="arc-heading reveal">seven territories<span> crossed</span></div>
+    <div class="arc-steps reveal rd2">
+      <div class="arc-step" onclick="go(1)"><div class="arc-num">i</div><span class="arc-word">rush</span></div>
+      <div class="arc-step" onclick="go(2)"><div class="arc-num">ii</div><span class="arc-word">form</span></div>
+      <div class="arc-step" onclick="go(3)"><div class="arc-num">iii</div><span class="arc-word">race</span></div>
+      <div class="arc-step" onclick="go(4)"><div class="arc-num">iv</div><span class="arc-word">sky</span></div>
+      <div class="arc-step" onclick="go(5)"><div class="arc-num">v</div><span class="arc-word">light</span></div>
+      <div class="arc-step" onclick="go(6)"><div class="arc-num">vi</div><span class="arc-word">love</span></div>
+      <div class="arc-step" onclick="go(7)"><div class="arc-num">vii</div><span class="arc-word">still</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="soft-rule">
+
+<!-- ==================== POEM I ==================== -->
+<section class="poem-section" id="poem-1">
+  <div class="poem-bg-num right" aria-hidden="true">i</div>
+  <div class="poem-inner">
+    <div class="poem-meta reveal">
+      <div class="poem-number">movement i &nbsp;·&nbsp; rush</div>
+      <div class="poem-title">The Speed of Things</div>
+      <div class="poem-subtitle">on the world moving faster than you agreed to</div>
+    </div>
+    <div class="phil-block reveal rd1">
+      <p>Pascal once wrote that all of humanity's problems stem from the inability to sit quietly in a room alone. He meant it as a warning. In practice it reads as permission — to slow down, to feel the lag, to let the world outpace you without calling it failure. The headphones in this poem are not avoidance. They are cartography. A way of locating yourself when the map keeps changing.</p>
+      <div class="phil-attr">on overwhelm — blaise pascal · pensées</div>
+    </div>
+    <div class="poem-text reveal rd2">Life's moving fast,
+I feel my heart stuck in slow-mo.
+All the things that once made sense —
+now I'm like… wait, was that a no-go?
+
+Things that felt simple and fun
+now chase me like I owe them money in this run.
+
+A boy finds peace in songs,
+sings along just to feel he belongs.
+Headphones in, world on mute,
+low battery — but still kind of cute.
+
+Reality hits. No warning. No crown.
+Just shows up one day and sits you down.
+The leaves have slowly started to brown,
+even the sky feels a little less town.
+
+Life moves on,
+hands out wings, says "fly high."
+But sometimes it's fine to just sit… and cry.
+
+And somehow, between the chaos and the plea,
+life starts making a little sense to me —
+not perfect, not whole, not fully free…
+but enough to finally just… be.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('i-open')">why this opens the collection</button>
+      <button class="pbtn" onclick="ep('i-low')">on "low battery, but still kind of cute"</button>
+    </div>
+    <div class="expanel" id="i-open">
+      <div class="ep-label">the opening</div>
+      <p>A collection needs a before — a moment before anything is understood. This is that moment. Not dramatic. Not crisis. Just the quiet vertigo of realizing the world has been rearranged while you were sleeping. The poem earns its tenderness by refusing to overdramatize. The disorientation is real; the humor is realer. Both coexist. That's the tone for everything that follows.</p>
+    </div>
+    <div class="expanel" id="i-low">
+      <div class="ep-label">on one line</div>
+      <p>"Low battery, but still kind of cute" is probably the most honest sentence in the collection. It holds, in eight words, the central posture of the whole book: aware of its own depletion, unwilling to be destroyed by it. Every other poem is a variation on that line.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="· · ·"></div>
+
+<!-- ==================== POEM II ==================== -->
+<section class="poem-section" id="poem-2">
+  <div class="poem-bg-num left" aria-hidden="true">ii</div>
+  <div class="poem-inner">
+    <div class="poem-meta reveal">
+      <div class="poem-number">movement ii &nbsp;·&nbsp; form</div>
+      <div class="poem-title">Diamond and Dust</div>
+      <div class="poem-subtitle">what pressure makes of you, and who helped it along</div>
+    </div>
+    <div class="phil-block reveal rd1">
+      <p>Carbon, under sufficient heat and time, does not merely endure — it transforms. The diamond is not a survivor. It is a new thing entirely. This poem circles that idea: that the self is not a fixed object being tested, but a substance being made. The tenderness of tracing it back to two people — the mother's softness, the father's edge — is the poem's quietest and most difficult move.</p>
+      <div class="phil-attr">on becoming — material philosophy · crystallography of character</div>
+    </div>
+    <div class="poem-text reveal rd2">I found a life — almost here, almost whole,
+just cooking under the fire of ambitions.
+There are questions unanswered.
+There are days in trouble,
+feels like I'm living in a bubble
+on the verge of bursting.
+
+It's made of diamond crystals,
+baked under heat and pressure.
+
+I'm soft inside, with emotions from my mother,
+and sharp outside, shaped by my father's wisdom.
+
+Life sometimes gets boring —
+but maybe that's fine.
+His ambitions are high,
+he believes he can fly.
+The sky felt low,
+so he aimed for space.
+
+Fascinated by the mysteries of the universe,
+he had some questions
+and some orphan answers —
+so he just put it all in a verse.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('ii-orphan')">on "orphan answers"</button>
+      <button class="pbtn" onclick="ep('ii-shift')">the I → he shift</button>
+    </div>
+    <div class="expanel" id="ii-orphan">
+      <div class="ep-label">the richest image</div>
+      <p>An orphan answer is one whose question has been lost, or hasn't arrived yet. It floats. It belongs nowhere. The poem suggests that this is precisely the condition of a curious, unfinished mind — full of knowledge and intuition that hasn't found its shape. The verse becomes the foster home. That is perhaps the most honest description of why anyone writes poetry at all.</p>
+    </div>
+    <div class="expanel" id="ii-shift">
+      <div class="ep-label">the pronoun turn</div>
+      <p>The shift from "I" to "he" is not a mistake and not an affectation. The first person is too close — too raw to look at directly. So the poem steps back into third, the way you might squint at something very bright. The distance is not detachment. It is the only angle from which the thing can be seen clearly.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="· · ·"></div>
+
+<!-- ==================== POEM III ==================== -->
+<section class="poem-section" id="poem-3">
+  <div class="poem-bg-num right" aria-hidden="true">iii</div>
+  <div class="poem-inner">
+    <div class="poem-meta reveal">
+      <div class="poem-number">movement iii &nbsp;·&nbsp; race</div>
+      <div class="poem-title">The Boy at the Top</div>
+      <div class="poem-subtitle">what you find when you arrive where you were running</div>
+    </div>
+    <div class="phil-block reveal rd1">
+      <p>Camus identified the absurd as the gap between what we hunger for and what the world offers in return. This poem lives in that gap. The race is real; the hunger is genuine; the arrival is genuine too — and yet. The silence at the summit is not failure. It is a more complicated thing: the discovery that the self who wanted to arrive and the self who arrived are not the same person. Shakespeare called it "unpathed waters, undreamed shores." He meant it as adventure. Here it arrives as elegy.</p>
+      <div class="phil-attr">on ambition — albert camus · the myth of sisyphus</div>
+    </div>
+    <div class="poem-text reveal rd2">One… Two… Three… Go.
+The race began with a blasting blow —
+every face wore a divine glow.
+Tiny feet with hopes so stunning,
+innocent minds… yet already running.
+
+Years rolled by, the crowd grew wide,
+big fat lies ran side by side.
+Dreams were loud, the truth was humming —
+still they never stopped their running.
+
+Then the road split — he found two ways,
+and he had dreams to chase.
+He paused a moment, his courage numbing,
+he cried… he tried… then stopped becoming.
+
+But he made a choice and rose again —
+not out of pressure, not for acclaim.
+He walked his path in his own sure way,
+and Shakespeare echoed loud that day —
+"to unpathed waters, undreamed shores" —
+and he knew he wasn't running chores.
+He wasn't racing for crowns or scores.
+He was running to become… something more.
+
+And then he was there — the long-dreamed top,
+yet silence hit harder than any drop.
+Maybe he'd won. Maybe he was done.
+But he felt he'd lost the boy he'd begun.
+
+He stood alone in the thinning air,
+realized life was never fair.
+He was amazed.
+He had changed.
+And everyone just said — "well played."</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('iii-wp')">"well played" — unpacked</button>
+      <button class="pbtn" onclick="ep('iii-boy')">the boy he'd begun</button>
+    </div>
+    <div class="expanel" id="iii-wp">
+      <div class="ep-label">the cruelest two words</div>
+      <p>"Well played" is what an audience says when the show is over. It is appreciative. It is final. It sees the achievement and misses entirely the person who achieved it. The poem ends on this — not bitterness, not resolution — just the particular loneliness of being seen for the wrong thing. That loneliness is the collection's first real darkness. It will not be the last.</p>
+    </div>
+    <div class="expanel" id="iii-boy">
+      <div class="ep-label">what was lost</div>
+      <p>Not innocence — that word is too soft. What was lost is a particular quality of wanting. The boy who started the race wanted things with the uncomplicated hunger of someone who has never been disappointed. The person at the top wants differently. More carefully. With more at stake. The poem doesn't say which is better. It just marks the distance.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="· · ·"></div>
+
+<!-- ==================== POEM IV ==================== -->
+<section class="poem-section" id="poem-4">
+  <div class="poem-bg-num left" aria-hidden="true">iv</div>
+  <div class="poem-inner">
+    <div class="poem-meta reveal">
+      <div class="poem-number">movement iv &nbsp;·&nbsp; sky</div>
+      <div class="poem-title">The Bird I Watched Instead</div>
+      <div class="poem-subtitle">on the particular freedom of things that don't know your name</div>
+    </div>
+    <div class="phil-block reveal rd1">
+      <p>Bachelard wrote that to truly imagine flight is to briefly escape the tyranny of the horizontal — all the plans, lists, deadlines, the whole flat grammar of obligation. The bird in this poem doesn't know about any of that. It cuts through blue sky with the clean indifference of something that has never been asked to be productive. The poem watches it. That watching is the poem's whole argument.</p>
+      <div class="phil-attr">on imagination — gaston bachelard · the air and dreams</div>
+    </div>
+    <div class="poem-text reveal rd2">The bird is alone in the open sky —
+not lonely, just singular.
+It cuts through the blue like a thought
+you didn't know you were having.
+
+First flight or hundredth —
+it doesn't matter.
+Every rise through soft and shining clouds
+is a new country.
+Fear visits sometimes,
+but adventure never leaves.
+
+The view from up there must be surreal —
+or maybe that's just what I tell myself
+looking up from down here,
+wondering if any of it is real,
+or just a beautiful hallucination
+I've been granted on a slow afternoon.
+
+Whatever it is — never mind.
+My mind has found its rhyme.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('iv-env')">on the quiet envy</button>
+      <button class="pbtn" onclick="ep('iv-why')">why the collection needed this</button>
+    </div>
+    <div class="expanel" id="iv-env">
+      <div class="ep-label">the gentle kind of envy</div>
+      <p>Not jealousy — nothing so sharp. This is the softer thing: the wish to be, for a moment, unencumbered. The bird has no syllabus. No expectations. No gap between who it is and who it was supposed to become by now. "Whatever it is — never mind" is not resignation. It is the only sane response to beauty you can't possess. Receive it, and let it go.</p>
+    </div>
+    <div class="expanel" id="iv-why">
+      <div class="ep-label">a necessary breath</div>
+      <p>Three poems of sustained weight — overwhelm, identity, the cost of ambition — and then this: a slow afternoon, a bird, a mind that briefly stops trying. Without this poem, the collection is relentless. With it, there is air. It proves the speaker is not only driven and anxious — he is also, still, capable of stopping to look up. That matters more than it seems.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="· · ·"></div>
+
+<!-- ==================== POEM V ==================== -->
+<section class="poem-section" id="poem-5">
+  <div class="poem-bg-num right" aria-hidden="true">v</div>
+  <div class="poem-inner">
+    <div class="poem-meta reveal">
+      <div class="poem-number">movement v &nbsp;·&nbsp; light</div>
+      <div class="poem-title">The Stranger at Seven</div>
+      <div class="poem-subtitle">on hope that arrives in a face, not a philosophy</div>
+    </div>
+    <div class="phil-block reveal rd1">
+      <p>The Stoics counselled against hope on the grounds that it attaches us to outcomes we cannot control. But they left something out: the kind of hope that attaches to nothing at all — that blooms simply in the presence of something gentle, unexplained, and passing. A face at the right hour. A quality of light. The poem calls this a flame — but a flame lit not to sustain, only to remind. That distinction is everything.</p>
+      <div class="phil-attr">on hope — stoic philosophy · the particular universal</div>
+    </div>
+    <div class="poem-text reveal rd2">I was going down the lane
+with a heart full of something heavy —
+then I saw a candle in the ordinary dark.
+
+She was just a person passing through,
+and it was almost seven —
+that hour when the light goes golden
+and everything feels like it might mean something.
+
+There was a softness in her eyes,
+a stillness in the way she moved —
+something that felt, for a moment,
+like the world remembered how to be good.
+
+I smiled then.
+Not at her — at the proof of her.
+I dared to walk that extra mile.
+And there was a silver line ahead,
+waiting quiet, waiting patient,
+for its share of sunshine.
+
+She was a flame of hope —
+lit not to last, but to remind me
+there's nothing I cannot cope.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('v-proof')">"not at her — at the proof of her"</button>
+      <button class="pbtn" onclick="ep('v-thin')">on the thinness of the thread</button>
+    </div>
+    <div class="expanel" id="v-proof">
+      <div class="ep-label">the philosophical turn</div>
+      <p>This single line is where the poem moves from lyric to argument. The stranger is not the subject. What she demonstrates is the subject — that softness still exists in the world, that gentleness persists, that beauty is not merely an aesthetic fact but an ethical one. To smile at the proof of her is to treat a passing face as evidence. The poem is unusually rigorous, for something so warm.</p>
+    </div>
+    <div class="expanel" id="v-thin">
+      <div class="ep-label">fragile is enough</div>
+      <p>The vulnerability of this poem is in how little it takes. One person. One hour. The golden light of almost-seven. The speaker is depleted enough that this small, ordinary thing becomes sufficient. That is not weakness — that is an accurate report of how hope actually works. It doesn't arrive as a revelation. It arrives as a woman you'll never see again, walking in the right direction at the right time.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="· · ·"></div>
+
+<!-- ==================== POEM VI ==================== -->
+<section class="poem-section" id="poem-6">
+  <div class="poem-bg-num left" aria-hidden="true">vi</div>
+  <div class="poem-inner">
+    <div class="poem-meta reveal">
+      <div class="poem-number">movement vi &nbsp;·&nbsp; love</div>
+      <div class="poem-title">What's Love? (I Wasn't Supposed to Write This)</div>
+      <div class="poem-subtitle">arrived uninvited, mid-sentence, between other things</div>
+    </div>
+    <div class="phil-block reveal rd1">
+      <p>Roland Barthes spent an entire book asking the same question — in fragments, from every angle, without resolution. He understood that love resists the declarative sentence. It only survives in the interrogative, the parenthetical, the aside. This poem knows that. It doesn't arrive at love so much as stumble into it mid-thought, mid-line — and then, very honestly, stop to ask how it got there. That moment of self-interruption is the most philosophically alert thing in the collection.</p>
+      <div class="phil-attr">on love — roland barthes · a lover's discourse</div>
+    </div>
+    <div class="poem-text reveal rd2">What's love?
+An emotion,
+a notion,
+or just attraction
+lost in the chase of perfection?
+
+No one's perfect, no one's ideal —
+we all got scars that never fully heal.
+I had my flaws, my reckless laws,
+yet still they loved me — just because.
+
+Love is acceptance, sometimes demand.
+It's knowing their little "kaand."
+
+It's comfortable, it's easy.
+Sometimes silly, sometimes cheesy.
+It's being you, unapologetically true —
+and being the one in their point of view.
+
+It's butterflies dancing, a spark in the air,
+like flowers deciding to bloom everywhere.
+From roses to poses, to promises and pauses —
+those 3 a.m. calls.
+Those collective goals.
+
+But —
+wait a second… what got me here?
+Why am I writing about love so clear?
+I don't even know — just vibing, just chilling,
+studying, sitting… then words started spilling.
+
+What's love?
+Maybe it's exactly this —
+words that arrive before you know you're missing something.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('vi-wall')">the fourth-wall break</button>
+      <button class="pbtn" onclick="ep('vi-end')">on writing what you don't fully know</button>
+    </div>
+    <div class="expanel" id="vi-wall">
+      <div class="ep-label">where the poem confesses</div>
+      <p>"Wait a second — what got me here?" The poem catches itself mid-performance and drops the act. This is the most alive moment in the collection because it refuses to pretend that poetry is controlled. Something wrote this; the writer is catching up. The fourth-wall break is not a device. It is a report.</p>
+    </div>
+    <div class="expanel" id="vi-end">
+      <div class="ep-label">writing the unfinished thing</div>
+      <p>Writing about love before you've fully lived it is an act of extraordinary nerve. The poem avoids dishonesty by never claiming to have arrived anywhere. It only asks. And asks again. The second answer — "words that arrive before you know you're missing something" — is the truer one. It defines both love and poetry in the same breath. That economy is not an accident.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="· · ·"></div>
+
+<!-- ==================== POEM VII ==================== -->
+<section class="poem-section" id="poem-7">
+  <div class="poem-bg-num right" aria-hidden="true">vii</div>
+  <div class="poem-inner">
+    <div class="poem-meta reveal">
+      <div class="poem-number">movement vii &nbsp;·&nbsp; still</div>
+      <div class="poem-title">The Moon Doesn't Apologize for Its Scars</div>
+      <div class="poem-subtitle">on making peace without making sense</div>
+    </div>
+    <div class="phil-block reveal rd1">
+      <p>The Japanese call it wabi-sabi: the beauty native to things that are imperfect, impermanent, incomplete. Not beautiful despite their cracks — beautiful through them, as them. The scarred moon at the close of this poem is the collection's final image and its deepest argument. It has been hit by everything. It shows every mark. And every night, without apology, it illuminates. The poem doesn't ask you to be fixed. It asks you to show up anyway.</p>
+      <div class="phil-attr">on imperfection — wabi-sabi · japanese aesthetics</div>
+    </div>
+    <div class="poem-text reveal rd2">It's me,
+
+sitting in my room,
+at my table,
+with a list so long it could stretch to the moon.
+
+Exams are near —
+they're loud in my ear,
+but somehow I'm drifting,
+not moving from here.
+
+They call it delulu,
+lost in some fantasy view,
+but maybe it's solulu
+for dreams that feel trulu.
+
+I know I belong somewhere —
+not here, not nowhere.
+There's light in the distance.
+I feel it out there.
+
+But books keep staring,
+deadlines declaring:
+"prepare for your future"
+like I'm not already caring.
+
+I say I'm fine.
+Every single time.
+Would it be my crime
+if I crossed that line?
+If I paused the race,
+just slowed the pace,
+and let my thoughts
+breathe in their own space?
+
+The music is on,
+and my worries are gone —
+for three-minute songs
+I feel kind of strong.
+The work feels lighter,
+the room feels tighter,
+the songs grow quieter,
+my thoughts softer, slighter.
+
+I think I'm missing
+a version of me
+who laughed a bit louder,
+who felt more free.
+Why do we age?
+Turn life to a stage?
+Are we getting wiser —
+or just writing a heavier page?
+
+Look at the moon —
+it's scarred, not immune,
+yet it shines every night
+like it owns the tune.
+
+And suddenly rhyme
+falls into line,
+like even my chaos
+is trying to be fine.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('vii-moon')">the moon — best image in the book</button>
+      <button class="pbtn" onclick="ep('vii-close')">why this closes everything</button>
+      <button class="pbtn" onclick="ep('vii-heavier')">on writing a heavier page</button>
+    </div>
+    <div class="expanel" id="vii-moon">
+      <div class="ep-label">the moon</div>
+      <p>Every crater on the moon is a record of something that hit it. The moon kept none of that secret. It wears every collision on its face, visible from anywhere on earth, every night. And still — it reflects. Still it pulls the tides. Still it makes people stop and look up and feel, briefly, that something large is watching over them. The poem does not ask the reader to be strong. Only to be the moon: marked, present, giving light.</p>
+    </div>
+    <div class="expanel" id="vii-close">
+      <div class="ep-label">the closing movement</div>
+      <p>The collection opens in motion — life too fast, the world rearranged, everything moving before you've agreed to begin. It closes in stillness: a room, a table, a list, a moon. Not resolution. Arrival. The person sitting here has not solved anything. But they are sitting still, which is itself a kind of answer. "Even my chaos is trying to be fine" — not fine. Trying. That distinction is the whole book.</p>
+    </div>
+    <div class="expanel" id="vii-heavier">
+      <div class="ep-label">the question that earns no answer</div>
+      <p>"Are we getting wiser — or just writing a heavier page?" This is the one question in the collection that the poem refuses to answer. Deliberately. Because the honest answer is: both, probably. And also: it depends on the day. And also: does it matter, if the writing helps you carry it? The question is left open not from evasion but from respect — for the reader, for the complexity, for the fact that some things can only be held, not resolved.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="soft-rule">
+
+<!-- FINALE / CODA -->
+<section class="finale" id="finale">
+  <div class="finale-ghost" aria-hidden="true">passed</div>
+  <div class="finale-lines reveal">
+    <div class="finale-line">every country leaves something in you</div>
+    <div class="finale-line">that you carry without knowing —</div>
+    <div class="finale-line">a particular quality of light,</div>
+    <div class="finale-line">a word you learned there,</div>
+    <div class="finale-line">the shape of a road at dusk.</div>
+    <div class="finale-line hl">you were here. it was real.</div>
+    <div class="finale-line" style="font-size:1rem;margin-top:1.2rem;color:var(--text3)">the poems are proof.</div>
+  </div>
+  <div class="finale-credit reveal rd2">
+    A Country I Was Passing Through &nbsp;·&nbsp; P &nbsp;·&nbsp; all poems original
+  </div>
+</section>
+
+<script>
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.transform=`translate(${mx-3}px,${my-3}px)`;
+});
+(function animR(){
+  rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;
+  ring.style.transform=`translate(${rx-14}px,${ry-14}px)`;
+  requestAnimationFrame(animR);
+})();
+
+const prog=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  prog.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+});
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+function ep(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+function go(n){
+  document.getElementById('poem-'+n).scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
